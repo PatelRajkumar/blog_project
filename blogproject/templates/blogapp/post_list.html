@@ -1,0 +1,31 @@
+{%extends 'blogapp/base.html'%}
+{%block title_block%}
+RAJ'S BLOG
+{%endblock%}
+{%block body_block%}
+<h1>RAJs project</h1>
+{%for blog in post_list%}
+<h2><a href="{{blog.get_absolute_url}}">{{blog.title}}</a></h2><p id="date">  published by {{blog.author|title}} on date {{blog.publish}}</p>
+{%if tag%}
+ <h2>Posts tagged with "{{tag.name}}"</h2>
+ {%endif%}
+Tags: {%for tag in blog.tags.all%}
+<a href="{%url 'post_list_by_tag_name' tag.slug%}">{{tag.name}}</a>
+{%endfor%}
+{{blog.body|truncatewords:30|linebreaks}}
+{%endfor%}
+<div class="paginator">
+<span>
+{%if post_list.has_previous%}
+<a href="?page={{post_list.previous_page_number}}">previous</a>
+{%endif%}
+</span>
+<span class="current">page {{post_list.number}} of {{post_list.paginator.num_pages}}</span>
+<span>
+{%if post_list.has_next%}
+<a href="?page={{post_list.next_page_number}}"> next</a>
+{%endif%}
+</span>
+</div>
+{%endblock%}
+

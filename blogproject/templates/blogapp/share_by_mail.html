@@ -1,0 +1,17 @@
+{%extends 'blogapp/base.html'%}
+{%block title_block%}
+{{post.title}}
+{%endblock%}
+{%block body_block%}
+{%if sent%}
+<h1> email sent sucssesfully</h1>
+{%else%}
+<h1>share "{{post.title}}" mail </h1>
+<form method="post">
+{{form.as_p}}
+{%csrf_token%}
+<input type="submit" value="send_mail">
+</form>
+{%endif%}
+{%endblock%}
+

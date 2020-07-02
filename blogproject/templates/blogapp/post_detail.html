@@ -1,0 +1,31 @@
+{%extends 'blogapp/base.html'%}
+{%block title_block%}
+{{post.title}}
+{%endblock%}
+{%block body_block%}
+<h1>{{post.title}}</h1>
+<p id="date">  published by {{post.author|title}} on date {{post.publish}}</p>
+{{post.body|linebreaks}}
+<a href="/{{post.id}}/share">share_by_mail</a>
+
+<h2>{{comments.count}} comment{{comments.count|pluralize}}</h2>
+{%if comments%}
+{%for comment in comments%}
+<p id="ch">Comment by {{comment.name}} on {{comment.created}}</p>
+{{comment.comment|linebreaks}}
+{%endfor%}
+{%else%}
+<p>There No Comments Yet</p>
+<h3>you can submit your comment it is valuable for us</h3>
+{%endif%}
+{%if csubmit%}
+<h2>Comment Added Successfully </h2>
+{%else%}
+<form method="POST">
+{{form.as_p}}
+{%csrf_token%}
+<input type="submit" value="Add Comment">
+</form>
+{%endif%}
+{%endblock%}
+
